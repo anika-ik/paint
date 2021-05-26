@@ -1,44 +1,36 @@
-var mouseEvent="empty";
-
-canvas= document.getElementById("myCanvas");
-ctx= canvas.getContext("2d");
-color= "black";
-width_of_line= 2;
-canvas.addEventListener("mousedown", my_mousedown);
-
-function my_mousedown(e){
-    color= document.getElementById("color").value;
-    width_of_line= document.getElementById("width_of_line").value;
-    radius= document.getElementById("radius").value;
-    mouseEvent= "mouseDown";
+names_of_people=[];
+function submit(){
+    var GuestName= document.getElementById("name_of_guest").value;
+    names_of_people.push(GuestName);
+    console.log(names_of_people);
+    document.getElementById("display_name").innerHTML= names_of_people;
+    document.getElementById("name_of_guest").innerHTML= "";
 }
 
-canvas.addEventListener("mousemove", my_mousemove);
-function my_mousemove(e){
-    current_position_of_mouse_x= e.clientX - canvas.offsetLeft;
-    current_position_of_mouse_y= e.clientY - canvas.offsetTop;
+function show(){
+    var ShowName= names_of_people.join('<br>');
+    console.log(names_of_people);
+    document.getElementById("show_names").innerHTML= ShowName.toString();
 
-    if(mouseEvent== "mouseDown"){
-        console.log("current position of x and y coordinates = ")
-        console.log("x = " + current_position_of_mouse_x + "y =" + current_position_of_mouse_y);
-        ctx.beginPath();
-        ctx.strokeStyle= color;
-        ctx.lineWidth= width_of_line;
-        ctx.arc(current_position_of_mouse_x, current_position_of_mouse_y, radius, 0, 2 * Math.PI);
-        ctx.stroke();
-    }
+    document.getElementById("sort_button").style.display="inline-block";
+
+}
+function sorting(){
+    names_of_people.sort();
+    console.log(names_of_people);
+    document.getElementById("sorted_names").innerHTML= names_of_people;
 }
 
-canvas.addEventListener("mouseup", my_mouseup);
-function my_mouseup(e){
-    mouseEvent= "mouseUP";
-}
+function searching(){
+    var s= document.getElementById("search_name").value;
+    var found=0;
+    var j;
+    for(j=0; j<names_of_people.length; j++){
 
-canvas.addEventListener("mouseleave", my_mouseleave);
-function my_mouseleave(e){
-    mouseEvent= "mouseleave";
-}
-
-function clearArea(){
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        if(s==names_of_people[j]){
+            found=found+1
+        }
+    }    
+    document.getElementById("searched").innerHTML="name found "+found+"time/s";
+    console.log("found name "+found+" time/s");
 }
